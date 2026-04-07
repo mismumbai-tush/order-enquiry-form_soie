@@ -1,0 +1,5 @@
+{
+  "name": "Enquiry Management System",
+  "description": "A Google Forms-like application to capture enquiries and sync them with specific Google Sheets based on user mapping.",
+  "requestFramePermissions": []
+}
