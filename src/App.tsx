@@ -37,7 +37,6 @@ export default function App() {
 
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState('');
-  const [isAuthChecking, setIsAuthChecking] = useState(true);
 
   useEffect(() => {
     checkAuth();
@@ -64,8 +63,6 @@ export default function App() {
       }
     } catch (err) {
       console.error('Auth check failed:', err);
-    } finally {
-      setIsAuthChecking(false);
     }
   };
 
@@ -142,14 +139,6 @@ export default function App() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  if (isAuthChecking) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
-        <Loader2 className="w-8 h-8 text-indigo-600 animate-spin" />
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 lg:px-8 font-sans">
       <motion.div 
@@ -180,38 +169,6 @@ export default function App() {
             <h1 className="text-3xl font-bold text-slate-900 mb-2">Enquiry Form</h1>
             <div className="flex flex-col gap-4">
               <p className="text-slate-600">Please fill out the details below to submit your enquiry.</p>
-              
-              <div className="border-t pt-4 mt-2">
-                {user ? (
-                  <div className="flex items-center justify-between bg-indigo-50 p-3 rounded-lg border border-indigo-100">
-                    <div className="flex items-center gap-3">
-                      <img src={user.picture} alt={user.name} className="w-8 h-8 rounded-full border border-indigo-200" />
-                      <div>
-                        <p className="text-sm font-semibold text-indigo-900">{user.email}</p>
-                        <p className="text-xs text-indigo-600">Logged in</p>
-                      </div>
-                    </div>
-                    <button 
-                      onClick={handleLogout}
-                      className="flex items-center gap-1 text-xs font-medium text-indigo-600 hover:text-indigo-800 transition-colors"
-                    >
-                      <LogOut className="w-3 h-3" />
-                      Switch account
-                    </button>
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-between bg-slate-100 p-3 rounded-lg border border-slate-200">
-                    <p className="text-sm text-slate-600 italic">Sign in to record your email with the response.</p>
-                    <button 
-                      onClick={handleLogin}
-                      className="flex items-center gap-2 bg-white px-3 py-1.5 rounded border border-slate-300 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors shadow-sm"
-                    >
-                      <LogIn className="w-4 h-4" />
-                      Sign in
-                    </button>
-                  </div>
-                )}
-              </div>
             </div>
           </div>
         </div>

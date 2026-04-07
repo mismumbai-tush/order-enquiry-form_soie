@@ -125,17 +125,17 @@ app.post("/api/submit-enquiry", async (req, res) => {
       });
       await sheets.spreadsheets.values.update({
         spreadsheetId,
-        range: `${tabName}!A1:H1`,
+        range: `${tabName}!A1:G1`,
         valueInputOption: "USER_ENTERED",
-        requestBody: { values: [["Date", "Email", "Description", "Customer Name", "Article Number", "Quantity", "Type", "Timestamp"]] }
+        requestBody: { values: [["Timestamp", "Date", "Customer Name", "Article Number", "Quantity", "Type", "Description"]] }
       });
     }
 
     await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: `${tabName}!A:H`,
+      range: `${tabName}!A:G`,
       valueInputOption: "USER_ENTERED",
-      requestBody: { values: [[dateOfEnquiry, emailToLog, description, customerName, articleNumber, quantity, enquiryType, new Date().toISOString()]] },
+      requestBody: { values: [[new Date().toLocaleString(), dateOfEnquiry, customerName, articleNumber, quantity, enquiryType, description]] },
     });
 
     res.json({ success: true, message: `Saved in tab: ${tabName}` });
